@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building Hub — Realm</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .hub-hero {
+      background: var(--navy);
+      padding: 3.5rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hub-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+    .hub-hero-inner { position: relative; z-index: 1; }
+    .hub-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 2rem;
+    }
+    .hub-breadcrumb a { color: rgba(255,255,255,0.35); transition: color 0.2s; }
+    .hub-breadcrumb a:hover { color: rgba(255,255,255,0.7); }
+    .hub-breadcrumb span { color: rgba(255,255,255,0.2); }
+    .hub-building-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .hub-building-name {
+      font-family: var(--ff-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 400;
+      color: white;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .hub-building-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .hub-meta-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.04em;
+    }
+    .hub-meta-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--amber); }
+    .hub-portal-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      padding: 0.65rem 1.3rem;
+      border-radius: var(--r-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .hub-portal-btn:hover { background: var(--amber); border-color: var(--amber); }
+
+    /* Cards grid */
+    .hub-cards-section { padding: 4rem 0 5rem; }
+    .hub-cards-label { margin-bottom: 2.5rem; }
+    .hub-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    /* Primary card — Move In — gets special treatment */
+    .hub-card.primary {
+      background: var(--navy);
+      border-color: var(--navy);
+      grid-column: span 1;
+    }
+    .hub-card.primary .hub-card-icon { background: rgba(255,255,255,0.07); }
+    .hub-card.primary .hub-card-icon svg { color: var(--amber); }
+    .hub-card.primary .hub-card-title { color: white; }
+    .hub-card.primary .hub-card-desc { color: rgba(255,255,255,0.45); }
+    .hub-card.primary:hover { background: var(--navy-mid); border-color: var(--amber); }
+
+    .hub-info {
+      margin-top: 3rem;
+      background: var(--cream-dark);
+      border-radius: var(--r);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      border: 1px solid var(--border);
+    }
+    .hub-info-icon {
+      width: 40px; height: 40px;
+      background: white;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .hub-info p { font-size: 0.875rem; color: var(--text-mid); line-height: 1.65; }
+    .hub-info a { color: var(--amber); font-weight: 600; }
+
+    @media (max-width: 900px) { .hub-cards-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) { .hub-cards-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M7 1.5C7 1.5 10 4.5 10 7C10 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M7 1.5C7 1.5 4 4.5 4 7C4 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M1.5 7H12.5" stroke="#C07B2E" stroke-width="1.2"/></svg>
+      </div>
+      <span class="nav-logo-name">Realm</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html">Support Hub</a></li>
+      <li><a href="index.html" class="nav-cta">Change Building</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="hub-hero">
+  <div class="wrap hub-hero-inner">
+    <div class="hub-breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span id="breadBuilding">Building Hub</span>
+    </div>
+    <div class="hub-building-header">
+      <div>
+        <h1 class="hub-building-name anim" id="buildingName">Your Building</h1>
+        <div class="hub-building-meta">
+          <span class="hub-meta-tag"><span class="hub-meta-dot"></span> <span id="buildingPostcode">—</span></span>
+          <span class="hub-meta-tag"><span class="hub-meta-dot"></span> Residential</span>
+          <span class="hub-meta-tag"><span class="hub-meta-dot"></span> Water &amp; Utilities</span>
+        </div>
+      </div>
+      <a href="https://customers.bluebilling.com.au" target="_blank" class="hub-portal-btn anim d2">
+        <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><rect x="1.5" y="3" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 3V2M9 3V2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Access Customer Portal
+      </a>
+    </div>
+  </div>
+</div>
+
+<section class="hub-cards-section">
+  <div class="wrap">
+    <div class="hub-cards-label">
+      <div class="section-tag"><span class="t-label">Building Services</span></div>
+      <p class="t-body">Select a service to manage your account.</p>
+    </div>
+
+    <div class="hub-cards-grid">
+
+      <a href="move-in.html" class="hub-card primary anim d1">
+        <div class="hub-card-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><path d="M3 11L11 3l8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 9v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="hub-card-title">Move In</div>
+        <div class="hub-card-desc">Set up your utility services and start your account for your new home.</div>
+        <div class="hub-card-link">Get started →</div>
+      </a>
+
+      <a href="https://customers.bluebilling.com.au" target="_blank" class="hub-card anim d2">
+        <div class="hub-card-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><rect x="2" y="5" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M2 9h18" stroke="currentColor" stroke-width="1.6"/><path d="M6 14h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="hub-card-title">Pay a Bill</div>
+        <div class="hub-card-desc">Make a payment through our secure payment system via the customer portal.</div>
+        <div class="hub-card-link">Go to portal →</div>
+      </a>
+
+      <a href="move-out.html" class="hub-card anim d3">
+        <div class="hub-card-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><path d="M15 11H3m0 0l4-4m-4 4l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 7V5a1 1 0 011-1h7a1 1 0 011 1v12a1 1 0 01-1 1h-7a1 1 0 01-1-1v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="hub-card-title">Move Out</div>
+        <div class="hub-card-desc">Close your account and finalise your utility services when leaving.</div>
+        <div class="hub-card-link">Start process →</div>
+      </a>
+
+      <a href="https://customers.bluebilling.com.au" target="_blank" class="hub-card anim d3">
+        <div class="hub-card-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><rect x="2" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M6 10v4M10 9v5M14 12v2M18 8v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="hub-card-title">Direct Debit</div>
+        <div class="hub-card-desc">Set up automatic payments for hassle-free bill management.</div>
+        <div class="hub-card-link">Set up →</div>
+      </a>
+
+      <a href="support.html" class="hub-card anim d4">
+        <div class="hub-card-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><path d="M4.5 9A6.5 6.5 0 0111 2.5h0A6.5 6.5 0 0117.5 9v.5a4.5 4.5 0 01-4.5 4.5h-1a1.5 1.5 0 010-3h1A1.5 1.5 0 0014.5 9.5V9a3.5 3.5 0 00-7 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M11 19.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="currentColor"/></svg>
+        </div>
+        <div class="hub-card-title">Contact Support</div>
+        <div class="hub-card-desc">Get help with your account, report a meter issue, or ask a question.</div>
+        <div class="hub-card-link">Get help →</div>
+      </a>
+
+    </div>
+
+    <div class="hub-info anim d5">
+      <div class="hub-info-icon">
+        <svg width="18" height="18" fill="none" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" stroke="#C07B2E" stroke-width="1.4"/><path d="M9 8.5v4M9 6v.5" stroke="#C07B2E" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <p>Need help completing the Move In form? Call our office on <a href="tel:1300584628">1300 584 628</a> during business hours. If your property doesn't currently have power, reconnection may take up to 3 business days.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-brand-name">Realm</span>
+        <p>Utility billing for residential buildings and strata communities across South East Queensland.</p>
+        <div class="footer-social">
+          <a href="#">in</a><a href="#">fb</a><a href="#">tw</a><a href="#">ig</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Pages</h5>
+        <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="support.html">Support Hub</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <ul><li><a href="building-hub.html">My Building</a></li><li><a href="move-in.html">Move In</a></li><li><a href="https://customers.bluebilling.com.au" target="_blank">Pay a Bill</a></li><li><a href="move-out.html">Move Out</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <p>T: <a href="tel:1300989438" style="color:rgba(255,255,255,0.5)">1300 989 438</a><br>E: <a href="mailto:info@realmcorp.com.au" style="color:rgba(255,255,255,0.5)">info@realmcorp.com.au</a><br><br>PO Box 153<br>Nerang QLD 4211</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Realm Corporation Pty Ltd. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Read building from URL param
+  const params = new URLSearchParams(window.location.search);
+  const building = params.get('building') || 'Your Building';
+
+  // Quick postcode reverse lookup
+  const POSTCODES = { 'Riverlily':'4211','Crestwood Gardens':'4210','Saltwater':'4212','Chevron Vista':'4215','Harbour Reach':'4216','Surfers Palms':'4217' };
+
+  document.getElementById('buildingName').textContent = building;
+  document.getElementById('breadBuilding').textContent = building;
+  const pc = POSTCODES[building];
+  document.getElementById('buildingPostcode').textContent = pc ? 'Postcode ' + pc : '—';
+</script>
+</body>
+</html>

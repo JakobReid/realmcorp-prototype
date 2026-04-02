@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realm — Better Billing</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--navy);
+      min-height: calc(100vh - 66px);
+      display: grid;
+      grid-template-columns: 1fr 460px;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 460px; bottom: 0; left: 0;
+      background: linear-gradient(135deg, rgba(192,123,46,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    /* subtle grid texture on hero */
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-left {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(3rem, 6vw, 6rem) clamp(2rem, 5vw, 5rem);
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .hero-tagline { color: var(--amber); margin-bottom: 1.8rem; }
+    .hero-h1 { color: white; margin-bottom: 1.6rem; }
+    .hero-h1 em { font-style: italic; color: rgba(255,255,255,0.55); }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.55);
+      max-width: 460px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .hero-badges {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--amber);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── SEARCH PANEL ─── */
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 2.5rem;
+      background: rgba(255,255,255,0.03);
+    }
+    .search-panel {
+      background: white;
+      border-radius: var(--r-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-xl);
+    }
+    .search-panel-top {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .search-panel-top h2 {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 0.45rem;
+    }
+    .search-panel-top p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .search-row {
+      display: flex;
+      gap: 0.6rem;
+    }
+    .search-row input {
+      flex: 1;
+      background: var(--cream);
+      border: 1.5px solid var(--cream-dark);
+      border-radius: var(--r-sm);
+      padding: 0.85rem 1rem;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .search-row input:focus {
+      border-color: var(--navy-light);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(30,65,104,0.1);
+    }
+    .search-row input::placeholder { color: var(--text-muted); }
+    .search-row button {
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: var(--r-sm);
+      padding: 0.85rem 1.4rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+    }
+    .search-row button:hover { background: var(--amber); }
+    .search-result {
+      display: none;
+      margin-top: 1rem;
+      background: var(--cream);
+      border-radius: var(--r-sm);
+      padding: 1rem 1.1rem;
+      border-left: 3px solid var(--amber);
+    }
+    .search-result.visible { display: block; }
+    .search-result-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .search-result-building { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 500; color: var(--navy); margin-bottom: 0.6rem; }
+    .search-result-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: var(--r-sm);
+      padding: 0.55rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .search-result-btn:hover { background: var(--amber); }
+    .search-no-result { display: none; margin-top: 1rem; font-size: 0.875rem; color: var(--text-muted); }
+    .search-no-result.visible { display: block; }
+    .search-divider { display: flex; align-items: center; gap: 0.75rem; margin: 1.5rem 0; }
+    .search-divider::before, .search-divider::after { content: ''; flex: 1; height: 1px; background: var(--cream-dark); }
+    .search-divider span { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+    .search-alt-links { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .search-alt-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid var(--cream-dark);
+      border-radius: var(--r-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      transition: all 0.2s;
+      background: white;
+    }
+    .search-alt-link:hover { border-color: var(--amber); color: var(--amber); }
+    .search-trust {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-top: 1.5rem;
+      margin-top: 1.5rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+    .search-trust-dot { width: 7px; height: 7px; background: #22C55E; border-radius: 50%; flex-shrink: 0; }
+    .search-trust span { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ─── ABOUT STRIP ─── */
+    .about-strip {
+      background: var(--cream-dark);
+      padding: 3rem 0;
+      border-bottom: 1px solid rgba(11,31,58,0.07);
+    }
+    .about-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(11,31,58,0.07);
+    }
+    .about-stat {
+      background: var(--cream-dark);
+      padding: 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .about-stat-num {
+      font-family: var(--ff-display);
+      font-size: 2.8rem;
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .about-stat-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ─── SERVICES ─── */
+    .services-section { background: var(--cream); }
+    .services-layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .services-sticky { position: sticky; top: 100px; }
+    .services-sticky h2 { margin-bottom: 1.2rem; }
+    .services-sticky p { margin-bottom: 2rem; }
+    .services-list { display: flex; flex-direction: column; gap: 0; }
+    .service-row {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 1.5rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .service-row:first-child { border-top: 1px solid var(--border); }
+    .service-num {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--cream-dark);
+      line-height: 1;
+      padding-top: 3px;
+    }
+    .service-content h3 { font-family: var(--ff-body); font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem; }
+    .service-content p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ─── HOW IT WORKS ─── */
+    .how-section { background: var(--navy); }
+    .how-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 6rem;
+      align-items: center;
+    }
+    .how-right-img {
+      border-radius: var(--r-lg);
+      background: var(--navy-mid);
+      aspect-ratio: 4/5;
+      position: relative;
+      overflow: hidden;
+    }
+    .how-right-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 100%);
+    }
+    /* decorative building lines */
+    .how-right-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 41px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 41px);
+    }
+    .img-badge {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      right: 2rem;
+      z-index: 1;
+      background: rgba(11,31,58,0.8);
+      backdrop-filter: blur(12px);
+      border-radius: var(--r-sm);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 1.25rem 1.5rem;
+    }
+    .img-badge-num { font-family: var(--ff-display); font-size: 2.2rem; color: white; line-height: 1; margin-bottom: 0.2rem; }
+    .img-badge-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+    .how-steps { display: flex; flex-direction: column; gap: 0; }
+    .how-step {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .how-step:last-child { border-bottom: none; }
+    .how-step-num { font-family: var(--ff-display); font-size: 1.8rem; font-weight: 400; color: var(--amber); flex-shrink: 0; width: 2rem; line-height: 1; padding-top: 2px; }
+    .how-step h4 { font-family: var(--ff-body); font-size: 0.95rem; font-weight: 600; color: white; margin-bottom: 0.25rem; }
+    .how-step p { font-size: 0.875rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { padding: 2.5rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); }
+      .search-panel { max-width: 500px; margin: 0 auto; }
+      .about-strip-inner { grid-template-columns: repeat(2, 1fr); }
+      .services-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .services-sticky { position: static; }
+      .how-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .how-right-img { aspect-ratio: 16/9; }
+    }
+    @media (max-width: 640px) {
+      .about-strip-inner { grid-template-columns: 1fr; }
+      .search-alt-links { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="7" cy="7" r="5.5" stroke="#C07B2E" stroke-width="1.2"/>
+          <path d="M7 1.5C7 1.5 10 4.5 10 7C10 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/>
+          <path d="M7 1.5C7 1.5 4 4.5 4 7C4 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/>
+          <path d="M1.5 7H12.5" stroke="#C07B2E" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <span class="nav-logo-name">Realm</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html">Support Hub</a></li>
+      <li><a href="building-hub.html" class="nav-cta">My Account</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+
+  <div class="hero-left">
+    <div class="t-label hero-tagline anim">Utility Billing — South East Queensland</div>
+    <h1 class="t-display hero-h1 anim d1">
+      Better<br><em>Billing.</em>
+    </h1>
+    <p class="hero-desc anim d2">
+      Realm manages water and utility billing for residential buildings and strata communities across South East Queensland. Clear bills, on time, every time.
+    </p>
+    <div class="hero-badges anim d3">
+      <span class="hero-badge"><span class="hero-badge-dot"></span> 15+ years experience</span>
+      <span class="hero-badge"><span class="hero-badge-dot"></span> SEQ based team</span>
+      <span class="hero-badge"><span class="hero-badge-dot"></span> Strata specialists</span>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="search-panel anim d2">
+      <div class="search-panel-top">
+        <h2>Find your building</h2>
+        <p>Enter your postcode to access your account or set up a new service.</p>
+      </div>
+
+      <div class="search-row">
+        <input type="text" id="postcodeInput" placeholder="Enter postcode…" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+        <button onclick="doSearch()">Search →</button>
+      </div>
+
+      <div class="search-result" id="searchResult">
+        <div class="search-result-label">Building found</div>
+        <div class="search-result-building" id="resultBuilding">Riverlily</div>
+        <button class="search-result-btn" id="resultBtn" onclick="goToHub()">Go to my building →</button>
+      </div>
+
+      <div class="search-no-result" id="searchNoResult">
+        No buildings found for that postcode. <a href="contact.html" style="color:var(--amber)">Contact us</a> for help.
+      </div>
+
+      <div class="search-divider">
+        <span>or jump directly to</span>
+      </div>
+
+      <div class="search-alt-links">
+        <a href="support.html#movein" class="search-alt-link">
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7h10M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Move In
+        </a>
+        <a href="https://customers.bluebilling.com.au" target="_blank" class="search-alt-link">
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><rect x="1.5" y="3.5" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 6h11" stroke="currentColor" stroke-width="1.3"/></svg>
+          Pay a Bill
+        </a>
+        <a href="support.html" class="search-alt-link">
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 6.5v3M7 4.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Support Hub
+        </a>
+        <a href="contact.html" class="search-alt-link">
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M1.5 4.5C1.5 3.67 2.17 3 3 3h8c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5H3c-.83 0-1.5-.67-1.5-1.5v-5Z" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 4.5l5.5 3.5 5.5-3.5" stroke="currentColor" stroke-width="1.3"/></svg>
+          Contact Us
+        </a>
+      </div>
+
+      <div class="search-trust">
+        <span class="search-trust-dot"></span>
+        <span>Secure &amp; confidential — your data is protected</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="about-strip">
+  <div class="wrap">
+    <div class="about-strip-inner">
+      <div class="about-stat">
+        <span class="about-stat-num">15+</span>
+        <span class="about-stat-label">Years experience</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-num">SEQ</span>
+        <span class="about-stat-label">Based &amp; local</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-num">100%</span>
+        <span class="about-stat-label">Strata focused</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-num">4</span>
+        <span class="about-stat-label">Utility types billed</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section services-section">
+  <div class="wrap">
+    <div class="services-layout">
+      <div class="services-sticky">
+        <div class="section-tag"><span class="t-label">What we do</span></div>
+        <h2 class="t-headline" style="margin-bottom:1.2rem">End-to-end utility management.</h2>
+        <p class="t-body" style="margin-bottom:2rem">From meter reading to account reconciliation — we handle the full billing cycle so your community doesn't have to.</p>
+        <a href="about.html" class="btn btn-outline">Learn about Realm</a>
+      </div>
+      <div class="services-list">
+        <div class="service-row">
+          <div class="service-num">01</div>
+          <div class="service-content">
+            <h3>Customised Billing Solutions</h3>
+            <p>We work with your body corporate to create a billing plan that fits your community's exact needs and structure.</p>
+          </div>
+        </div>
+        <div class="service-row">
+          <div class="service-num">02</div>
+          <div class="service-content">
+            <h3>Accurate &amp; Timely Invoicing</h3>
+            <p>Precision and punctuality for every billing cycle — residents always know exactly what they owe and why.</p>
+          </div>
+        </div>
+        <div class="service-row">
+          <div class="service-num">03</div>
+          <div class="service-content">
+            <h3>Compliance Management</h3>
+            <p>We stay on top of regulatory requirements so your community avoids overcharges, disputes and service disruptions.</p>
+          </div>
+        </div>
+        <div class="service-row">
+          <div class="service-num">04</div>
+          <div class="service-content">
+            <h3>Financial Forecasting</h3>
+            <p>Accurate budgeting and cost prediction tools to help your body corporate plan ahead and manage funds confidently.</p>
+          </div>
+        </div>
+        <div class="service-row">
+          <div class="service-num">05</div>
+          <div class="service-content">
+            <h3>Usage Monitoring</h3>
+            <p>Track consumption patterns across your building and identify opportunities to reduce waste and lower costs.</p>
+          </div>
+        </div>
+        <div class="service-row">
+          <div class="service-num">06</div>
+          <div class="service-content">
+            <h3>Tailored Customer Service</h3>
+            <p>Direct, personal support for residents and building managers — real people, not a call centre queue.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section">
+  <div class="wrap">
+    <div class="how-layout">
+      <div>
+        <div class="section-tag" style="--amber:#C07B2E"><span class="t-label">How it works</span></div>
+        <h2 class="t-headline" style="color:white;margin-bottom:1.2rem">Your account in four steps.</h2>
+        <p style="color:rgba(255,255,255,0.5);line-height:1.8;font-size:0.975rem;margin-bottom:2.5rem">
+          Whether you're moving into a new home or managing your existing account, everything starts with your postcode.
+        </p>
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="how-step-num">1</div>
+            <div>
+              <h4>Enter your postcode</h4>
+              <p>Type your postcode into the search on the homepage. Takes two seconds.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">2</div>
+            <div>
+              <h4>Select your building</h4>
+              <p>Your building is matched automatically. One click to continue.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">3</div>
+            <div>
+              <h4>Choose your action</h4>
+              <p>Move in, pay a bill, set up direct debit, or get support — it's all in one place.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">4</div>
+            <div>
+              <h4>You're set</h4>
+              <p>We take it from there. Clear bills on time, every time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="how-right-img">
+        <div class="img-badge">
+          <div class="img-badge-num">1300 989 438</div>
+          <div class="img-badge-label">Office support line</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-brand-name">Realm</span>
+        <p>A dedicated utility billing service provider based in South East Queensland. Specialising in water billing for residential buildings and strata communities.</p>
+        <div class="footer-social">
+          <a href="#">in</a>
+          <a href="#">fb</a>
+          <a href="#">tw</a>
+          <a href="#">ig</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Pages</h5>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="support.html">Support Hub</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <ul>
+          <li><a href="building-hub.html">My Building</a></li>
+          <li><a href="move-in.html">Move In</a></li>
+          <li><a href="https://customers.bluebilling.com.au" target="_blank">Pay a Bill</a></li>
+          <li><a href="move-out.html">Move Out</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <p>
+          T: <a href="tel:1300989438" style="color:rgba(255,255,255,0.5)">1300 989 438</a><br>
+          E: <a href="mailto:info@realmcorp.com.au" style="color:rgba(255,255,255,0.5)">info@realmcorp.com.au</a><br><br>
+          PO Box 153<br>Nerang QLD 4211
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Realm Corporation Pty Ltd. All rights reserved.</span>
+      <span>ABN: — &nbsp;|&nbsp; Nerang QLD 4211</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Simulate the postcode→building lookup (mirrors live site behaviour)
+  const BUILDINGS = {
+    '4211': 'Riverlily',
+    '4210': 'Crestwood Gardens',
+    '4212': 'Saltwater',
+    '4215': 'Chevron Vista',
+    '4216': 'Harbour Reach',
+    '4217': 'Surfers Palms',
+  };
+
+  let currentBuilding = null;
+
+  function doSearch() {
+    const val = document.getElementById('postcodeInput').value.trim();
+    const resultEl = document.getElementById('searchResult');
+    const noResultEl = document.getElementById('searchNoResult');
+    const buildingEl = document.getElementById('resultBuilding');
+
+    resultEl.classList.remove('visible');
+    noResultEl.classList.remove('visible');
+
+    if (!val || val.length < 4) return;
+
+    const building = BUILDINGS[val];
+    if (building) {
+      currentBuilding = building;
+      buildingEl.textContent = building;
+      resultEl.classList.add('visible');
+    } else {
+      noResultEl.classList.add('visible');
+    }
+  }
+
+  function goToHub() {
+    if (currentBuilding) {
+      window.location.href = 'building-hub.html?building=' + encodeURIComponent(currentBuilding);
+    }
+  }
+
+  // Allow Enter key
+  document.getElementById('postcodeInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doSearch();
+  });
+</script>
+
+</body>
+</html>

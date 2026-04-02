@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Realm</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .contact-hero { background: var(--navy); padding: 4rem 0; }
+    .contact-layout { display: grid; grid-template-columns: 1fr 480px; gap: 6rem; align-items: start; }
+    .contact-form-card { background: white; border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2.5rem; position: sticky; top: 86px; box-shadow: var(--shadow); }
+    .contact-form-card h2 { font-family: var(--ff-display); font-size: 1.7rem; color: var(--navy); margin-bottom: 0.4rem; }
+    .contact-form-card > p { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-fields { display: flex; flex-direction: column; gap: 1.1rem; }
+    .form-success { display: none; background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: var(--r-sm); padding: 1rem 1.25rem; font-size: 0.9rem; color: #166534; margin-top: 1rem; }
+    .form-success.visible { display: block; }
+
+    .contact-info h2 { margin-bottom: 1.5rem; }
+    .contact-info-items { display: flex; flex-direction: column; gap: 0; margin-bottom: 3rem; }
+    .contact-info-item {
+      display: flex;
+      gap: 1.25rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-info-item:first-child { border-top: 1px solid var(--border); }
+    .contact-icon { width: 40px; height: 40px; background: var(--cream-dark); border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-item-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.2rem; }
+    .contact-item-value { font-size: 0.975rem; color: var(--navy); font-weight: 500; }
+    .contact-item-value a { color: var(--amber); }
+
+    .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .hours-item { background: var(--cream-dark); border-radius: var(--r-sm); padding: 1rem 1.1rem; }
+    .hours-day { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.2rem; }
+    .hours-time { font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+
+    @media (max-width: 960px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .contact-form-card { position: static; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M7 1.5C7 1.5 10 4.5 10 7C10 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M7 1.5C7 1.5 4 4.5 4 7C4 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M1.5 7H12.5" stroke="#C07B2E" stroke-width="1.2"/></svg>
+      </div>
+      <span class="nav-logo-name">Realm</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="support.html">Support Hub</a></li>
+      <li><a href="index.html" class="nav-cta">My Account</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="contact-hero">
+  <div class="wrap">
+    <div class="section-tag anim"><span class="t-label" style="color:var(--amber)">Get in touch</span></div>
+    <h1 class="t-headline anim d1" style="color:white;margin-bottom:0.75rem">Let's talk.</h1>
+    <p class="anim d2" style="color:rgba(255,255,255,0.5);max-width:480px;font-size:1rem;line-height:1.8">Interested in how Realm can streamline your building's billing? A member of our team will be in touch.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="contact-layout">
+
+      <div class="contact-info">
+        <div class="section-tag" style="margin-bottom:1.5rem"><span class="t-label">Reach us</span></div>
+        <h2 class="t-title" style="margin-bottom:2rem">We're based in Nerang,<br>South East Queensland.</h2>
+
+        <div class="contact-info-items">
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 22 22"><path d="M5.3 2C4 2 3 3 3 4.3c0 8.4 6.3 15.2 14 15.2 1.3 0 2.5-1 2.5-2.3v-2.4c0-1-.6-1.8-1.5-2.1l-2.5-.9c-.9-.3-1.8 0-2.4.7l-.5.6c-1.8-1-3.5-2.7-4.5-4.6l.6-.5c.7-.6 1-1.5.7-2.4L8.6 3.5C8.3 2.6 7.4 2 6.4 2H5.3z" stroke="#C07B2E" stroke-width="1.5"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Phone</div>
+              <div class="contact-item-value"><a href="tel:1300989438">1300 989 438</a></div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 22 22"><path d="M2 7l9 6 9-6" stroke="#C07B2E" stroke-width="1.5" stroke-linecap="round"/><rect x="2" y="4" width="18" height="14" rx="2" stroke="#C07B2E" stroke-width="1.5"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-value"><a href="mailto:info@realmcorp.com.au">info@realmcorp.com.au</a></div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 22 22"><path d="M11 2C7.7 2 5 4.7 5 8c0 4.5 6 11 6 11s6-6.5 6-11c0-3.3-2.7-6-6-6z" stroke="#C07B2E" stroke-width="1.5"/><circle cx="11" cy="8" r="2" stroke="#C07B2E" stroke-width="1.5"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Postal Address</div>
+              <div class="contact-item-value">PO Box 153, Nerang QLD 4211</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-tag" style="margin-bottom:1.25rem"><span class="t-label">Office hours</span></div>
+        <div class="hours-grid">
+          <div class="hours-item">
+            <div class="hours-day">Mon – Fri</div>
+            <div class="hours-time">9:00am – 5:00pm</div>
+          </div>
+          <div class="hours-item">
+            <div class="hours-day">Weekends</div>
+            <div class="hours-time">Closed</div>
+          </div>
+        </div>
+
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:1.5rem">Need help outside office hours? Visit our <a href="support.html" style="color:var(--amber);font-weight:600">Support Hub</a> for answers to common questions.</p>
+      </div>
+
+      <div class="contact-form-card anim d1">
+        <h2>Send us a message</h2>
+        <p>A member of our team will be in touch within 1–2 business days.</p>
+
+        <form class="form-fields" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="field">
+              <label for="fname">First Name *</label>
+              <input type="text" id="fname" required placeholder="Sarah">
+            </div>
+            <div class="field">
+              <label for="lname">Last Name *</label>
+              <input type="text" id="lname" required placeholder="Johnson">
+            </div>
+          </div>
+          <div class="field">
+            <label for="email">Email *</label>
+            <input type="email" id="email" required placeholder="sarah@example.com">
+          </div>
+          <div class="field">
+            <label for="phone">Mobile Phone *</label>
+            <input type="tel" id="phone" required placeholder="04XX XXX XXX">
+          </div>
+          <div class="field">
+            <label for="building">Building Name</label>
+            <input type="text" id="building" placeholder="e.g. Riverlily">
+          </div>
+          <div class="field">
+            <label for="message">Message *</label>
+            <textarea id="message" required placeholder="How can we help you?"></textarea>
+          </div>
+          <button type="submit" class="btn btn-amber btn-lg" style="justify-content:center;width:100%">Send Message →</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          ✓ Thanks — we've received your message and will be in touch within 1–2 business days.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-brand-name">Realm</span>
+        <p>Utility billing for residential buildings and strata communities across South East Queensland.</p>
+        <div class="footer-social"><a href="#">in</a><a href="#">fb</a><a href="#">tw</a><a href="#">ig</a></div>
+      </div>
+      <div class="footer-col">
+        <h5>Pages</h5>
+        <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="support.html">Support Hub</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <ul><li><a href="building-hub.html">My Building</a></li><li><a href="move-in.html">Move In</a></li><li><a href="https://customers.bluebilling.com.au" target="_blank">Pay a Bill</a></li><li><a href="move-out.html">Move Out</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <p>T: <a href="tel:1300989438" style="color:rgba(255,255,255,0.5)">1300 989 438</a><br>E: <a href="mailto:info@realmcorp.com.au" style="color:rgba(255,255,255,0.5)">info@realmcorp.com.au</a><br><br>PO Box 153<br>Nerang QLD 4211</p>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2024 Realm Corporation Pty Ltd. All rights reserved.</span></div>
+  </div>
+</footer>
+
+<script>
+// Pre-fill subject if passed via URL
+const params = new URLSearchParams(window.location.search);
+const subject = params.get('subject');
+if (subject) {
+  const msg = document.getElementById('message');
+  const labels = { billing: 'I have a question about my bill.', complaint: 'I would like to raise a concern.' };
+  if (labels[subject]) msg.value = labels[subject];
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  document.querySelector('.form-fields').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('visible');
+}
+</script>
+</body>
+</html>
