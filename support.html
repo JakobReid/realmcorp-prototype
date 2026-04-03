@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Support Hub — Realm</title>
+  <title>Support Hub | Realm</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="stylesheet" href="style.css">
   <style>
     .support-hero { background: var(--navy); padding: 4rem 0; }
@@ -41,6 +42,107 @@
     .sidebar-contact-item svg { flex-shrink: 0; color: var(--amber); }
     .sidebar-contact-item a { color: var(--amber); font-weight: 600; }
 
+    /* ── POLICIES & ASSISTANCE SECTION ── */
+    .policies-section { background: white; padding: clamp(3rem, 6vw, 5rem) 0; }
+    .policies-header { margin-bottom: 2.5rem; }
+    .policies-header h2 { margin-bottom: 0.5rem; }
+    .policies-header p { font-size: 0.95rem; color: var(--text-mid); line-height: 1.7; max-width: 620px; }
+
+    .policies-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+
+    .assist-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 2rem 1.75rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .assist-card-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.6rem;
+    }
+    .assist-card h3 {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+    }
+    .assist-card p {
+      font-size: 0.875rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .assist-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    .assist-list li {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+    .assist-list li a { color: var(--amber); font-weight: 600; }
+    .assist-list li a:hover { color: var(--navy); }
+    .assist-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+    .assist-card-links {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .assist-card-links a { color: var(--amber); font-weight: 600; }
+    .assist-card-links a:hover { color: var(--navy); }
+
+    .docs-header { margin-bottom: 1.5rem; }
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+    .doc-link {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 1rem 1.1rem;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy);
+      transition: all 0.2s;
+    }
+    .doc-link:hover { border-color: var(--amber); color: var(--amber); }
+    .doc-link svg { flex-shrink: 0; color: var(--text-muted); }
+    .doc-link:hover svg { color: var(--amber); }
+
+    @media (max-width: 960px) {
+      .policies-grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 960px) {
       .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
       .support-layout { grid-template-columns: 1fr; gap: 3rem; }
@@ -54,16 +156,13 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <div class="nav-logo-icon">
-        <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M7 1.5C7 1.5 10 4.5 10 7C10 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M7 1.5C7 1.5 4 4.5 4 7C4 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M1.5 7H12.5" stroke="#C07B2E" stroke-width="1.2"/></svg>
-      </div>
-      <span class="nav-logo-name">Realm</span>
+      <img src="assets/realmcorp-logo-white.png" alt="Realm" style="width:110px;height:auto">
     </a>
     <ul class="nav-links">
-      <li><a href="about.html">About Us</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="support.html" class="active">Support</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="support.html" class="active">Support Hub</a></li>
-      <li><a href="index.html" class="nav-cta">My Account</a></li>
     </ul>
   </div>
 </nav>
@@ -72,7 +171,7 @@
   <div class="wrap">
     <div class="section-tag anim"><span class="t-label" style="color:var(--amber)">Support Hub</span></div>
     <h1 class="t-headline anim d1">How can we help?</h1>
-    <p class="anim d2">We're here to guide you swiftly, addressing your queries and welcoming your suggestions. Find answers below or reach out directly.</p>
+    <p class="anim d2">Find answers to common questions below, or get in touch with our team directly.</p>
   </div>
 </div>
 
@@ -119,7 +218,7 @@
   </div>
 </div>
 
-<section class="section">
+<section class="section" style="background:var(--cream)">
   <div class="wrap">
     <div class="support-layout">
       <div>
@@ -144,7 +243,7 @@
             <span class="accordion-ind">+</span>
           </button>
           <div class="accordion-panel">
-            <div class="accordion-body">Realm passes on the cost of water or energy as charged to your body corporate or land owner. To view your community's current rates, simply enter your postcode into the search bar on our homepage — your rates will be displayed instantly. Available for existing clients only.</div>
+            <div class="accordion-body">Realm passes on the cost of water or energy as charged to your body corporate or land owner. To view your community's current rates, simply enter your postcode into the search bar on our homepage and your rates will be displayed instantly. This feature is available to existing clients.</div>
           </div>
         </div>
 
@@ -154,7 +253,7 @@
             <span class="accordion-ind">+</span>
           </button>
           <div class="accordion-panel">
-            <div class="accordion-body">You'll find step-by-step payment instructions in the bottom right corner of your bill. You can also pay directly through the Customer Portal — accessible via the Support Hub or by entering your postcode and selecting your building.</div>
+            <div class="accordion-body">You'll find step-by-step payment instructions in the bottom right corner of your bill. You can also pay directly through the Customer Portal, accessible via the Support Hub or by entering your postcode and selecting your building.</div>
           </div>
         </div>
 
@@ -170,7 +269,7 @@
 
         <div class="accordion-item">
           <button class="accordion-btn" onclick="toggleAccordion(this)">
-            I'm concerned about my rates — what should I do?
+            I'm concerned about my rates. What should I do?
             <span class="accordion-ind">+</span>
           </button>
           <div class="accordion-panel">
@@ -180,7 +279,7 @@
 
         <div class="accordion-item">
           <button class="accordion-btn" onclick="toggleAccordion(this)">
-            I think there's a problem with my meter — what do I do?
+            I think there's a problem with my meter. What do I do?
             <span class="accordion-ind">+</span>
           </button>
           <div class="accordion-panel">
@@ -190,23 +289,34 @@
 
         <div class="accordion-item">
           <button class="accordion-btn" onclick="toggleAccordion(this)">
-            Are there government schemes or rebates available?
+            What is your hardship policy?
             <span class="accordion-ind">+</span>
           </button>
           <div class="accordion-panel">
-            <div class="accordion-body">Yes. Various government concessions and rebates may apply depending on your circumstances. Contact us or visit the Queensland Government's energy concessions page for the most up-to-date information.</div>
+            <div class="accordion-body">We understand that financial difficulties can happen to anyone. If you're struggling to pay your bills, we can help with payment plans, pausing payments, and referrals to support services. See our <a href="#hardship" style="color:var(--amber);font-weight:600">Financial Hardship</a> section below for full details.</div>
           </div>
         </div>
 
         <div class="accordion-item">
           <button class="accordion-btn" onclick="toggleAccordion(this)">
-            What is your hardship policy?
+            Are there government rebates or concessions available?
             <span class="accordion-ind">+</span>
           </button>
           <div class="accordion-panel">
-            <div class="accordion-body">We understand that financial difficulties can arise. If you're experiencing hardship and struggling to pay your bills, please contact us as soon as possible. We'll work with you to find a suitable arrangement.</div>
+            <div class="accordion-body">Yes. Depending on your circumstances, you may be eligible for Queensland Government concessions on your utility bills. See our <a href="#concessions" style="color:var(--amber);font-weight:600">Government Concessions</a> section below for a full list of available schemes.</div>
           </div>
         </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)">
+            Where can I find your policies?
+            <span class="accordion-ind">+</span>
+          </button>
+          <div class="accordion-panel">
+            <div class="accordion-body">All of our policies are available as downloadable PDFs. You can find them in our <a href="#policies" style="color:var(--amber);font-weight:600">Policy Documents</a> section below, including our Financial Hardship, Domestic Violence Hardship, Complaints, Privacy, and Terms and Conditions policies.</div>
+          </div>
+        </div>
+
       </div>
 
       <div class="support-sidebar">
@@ -244,17 +354,91 @@
   </div>
 </section>
 
+<section class="policies-section">
+  <div class="wrap">
+    <div class="policies-header">
+      <div class="section-tag"><span class="t-label">Important Information</span></div>
+      <h2 class="t-title">Assistance and Policies</h2>
+      <p>If you're experiencing financial difficulty or want to know about available concessions, we're here to help.</p>
+    </div>
+
+    <div class="policies-grid">
+      <div class="assist-card" id="hardship">
+        <div class="assist-card-label">Financial Hardship</div>
+        <h3>Struggling to pay your bill?</h3>
+        <p>Get in touch as early as possible. We'll work with you to find a suitable arrangement so you can stay on top of your account.</p>
+        <ul class="assist-list">
+          <li>Flexible payment plans tailored to your situation</li>
+          <li>Temporarily pausing or reducing payments</li>
+          <li>Referrals to financial counselling services</li>
+          <li>No disconnection while you're working with us on a plan</li>
+          <li>All enquiries handled confidentially</li>
+        </ul>
+        <p class="assist-card-links">Call us on <a href="tel:1300989438">1300 989 438</a> or <a href="contact.html?subject=hardship">send a message</a>.</p>
+      </div>
+
+      <div class="assist-card" id="concessions">
+        <div class="assist-card-label">Government Concessions</div>
+        <h3>Schemes, rebates and grants you may be eligible for</h3>
+        <p>Depending on your circumstances, government concessions or rebates may apply to your utility bills.</p>
+        <ul class="assist-list">
+          <li><a href="https://www.qld.gov.au/community/cost-of-living-support/concessions/energy-concessions" target="_blank">Queensland Government Electricity Rebate</a></li>
+          <li><a href="https://www.qld.gov.au/community/cost-of-living-support/concessions/energy-concessions" target="_blank">Reticulated Natural Gas Rebate</a></li>
+          <li><a href="https://www.qld.gov.au/community/cost-of-living-support/concessions/energy-concessions/home-energy-emergency-assistance-scheme" target="_blank">Home Energy Emergency Assistance Scheme (HEEAS)</a></li>
+          <li><a href="https://www.energy.nsw.gov.au/households/rebates-and-assistance" target="_blank">NSW Rebates and Assistance</a></li>
+          <li>Medical cooling and heating concessions</li>
+          <li>Eligibility typically requires a Pensioner Concession Card, Health Care Card, or Seniors Card</li>
+        </ul>
+        <p class="assist-card-links">Not sure what applies to you? <a href="contact.html">Ask us</a> and we'll help you find out.</p>
+      </div>
+    </div>
+
+    <div class="docs-header" id="policies">
+      <div class="section-tag"><span class="t-label">Documents</span></div>
+      <h2 class="t-title">Policy Documents</h2>
+    </div>
+
+    <div class="docs-grid">
+      <a href="policies/251113-Policy-Financial-Hardship-1.pdf" target="_blank" class="doc-link">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Financial Hardship
+      </a>
+      <a href="policies/251113-Policy-Domestic-Violence-Hardship.pdf" target="_blank" class="doc-link">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Domestic Violence Hardship
+      </a>
+      <a href="policies/251113-Policy-Complaints-2.pdf" target="_blank" class="doc-link">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Complaints
+      </a>
+      <a href="policies/251113-Policy-Privacy.pdf" target="_blank" class="doc-link">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Privacy
+      </a>
+      <a href="policies/260118-Policy-Realm-Standard-Terms-and-Conditions-1.pdf" target="_blank" class="doc-link">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Terms and Conditions
+      </a>
+    </div>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
         <span class="footer-brand-name">Realm</span>
         <p>Utility billing for residential buildings and strata communities across South East Queensland.</p>
-        <div class="footer-social"><a href="#">in</a><a href="#">fb</a><a href="#">tw</a><a href="#">ig</a></div>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z"/></svg></a>
+          <a href="#" aria-label="X"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5"/></svg></a>
+        </div>
       </div>
       <div class="footer-col">
         <h5>Pages</h5>
-        <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="support.html">Support Hub</a></li></ul>
+        <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="support.html">Support</a></li></ul>
       </div>
       <div class="footer-col">
         <h5>Account</h5>
@@ -265,7 +449,7 @@
         <p>T: <a href="tel:1300989438" style="color:rgba(255,255,255,0.5)">1300 989 438</a><br>E: <a href="mailto:info@realmcorp.com.au" style="color:rgba(255,255,255,0.5)">info@realmcorp.com.au</a><br><br>PO Box 153<br>Nerang QLD 4211</p>
       </div>
     </div>
-    <div class="footer-bottom"><span>© 2024 Realm Corporation Pty Ltd. All rights reserved.</span></div>
+    <div class="footer-bottom"><span class="footer-year"></span></div>
   </div>
 </footer>
 
@@ -283,6 +467,7 @@ function toggleAccordion(btn) {
     panel.classList.add('open');
   }
 }
+document.querySelector('.footer-year').textContent = '\u00A9 ' + new Date().getFullYear() + ' Realm Corporation Pty Ltd. All rights reserved.';
 </script>
 </body>
 </html>

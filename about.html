@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us — Realm</title>
+  <title>About Us | Realm</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="stylesheet" href="style.css">
   <style>
     .about-hero {
@@ -25,25 +26,33 @@
       position: relative;
       overflow: hidden;
     }
+    .about-hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
     .about-hero-img::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(160deg, var(--navy-light) 0%, var(--navy) 100%);
+      background: linear-gradient(160deg, rgba(11,31,58,0.7) 0%, rgba(11,31,58,0.85) 100%);
+      z-index: 1;
     }
     .about-hero-img::after {
       content: '';
       position: absolute;
       inset: 0;
+      z-index: 2;
       background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 51px),
-        repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 51px);
+        repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255,255,255,0.06) 50px, rgba(255,255,255,0.06) 51px),
+        repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255,255,255,0.06) 50px, rgba(255,255,255,0.06) 51px);
     }
     .about-hero-img-label {
       position: absolute;
       bottom: 2.5rem;
       left: 2rem;
-      z-index: 1;
+      z-index: 3;
     }
     .about-hero-img-label p {
       font-family: var(--ff-display);
@@ -60,7 +69,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 1px;
-      background: rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.12);
       border-radius: var(--r);
       overflow: hidden;
     }
@@ -72,7 +81,7 @@
       font-family: var(--ff-display);
       font-size: 3rem;
       font-weight: 400;
-      color: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.25);
       line-height: 1;
       margin-bottom: 1rem;
     }
@@ -119,7 +128,7 @@
       font-family: var(--ff-display);
       font-size: 5rem;
       font-weight: 300;
-      color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.22);
       font-style: italic;
     }
     .team-role { color: var(--amber); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
@@ -155,16 +164,13 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <div class="nav-logo-icon">
-        <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M7 1.5C7 1.5 10 4.5 10 7C10 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M7 1.5C7 1.5 4 4.5 4 7C4 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M1.5 7H12.5" stroke="#C07B2E" stroke-width="1.2"/></svg>
-      </div>
-      <span class="nav-logo-name">Realm</span>
+      <img src="assets/realmcorp-logo-white.png" alt="Realm" style="width:110px;height:auto">
     </a>
     <ul class="nav-links">
-      <li><a href="about.html" class="active">About Us</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="support.html">Support</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="support.html">Support Hub</a></li>
-      <li><a href="index.html" class="nav-cta">My Account</a></li>
     </ul>
   </div>
 </nav>
@@ -177,15 +183,16 @@
         <div class="section-tag anim"><span class="t-label">Our Story</span></div>
         <h1 class="t-display anim d1" style="margin-bottom:1.5rem">Better<br><em style="font-style:italic;color:var(--text-muted)">Billing.</em></h1>
         <p class="t-body anim d2" style="max-width:480px;margin-bottom:1.5rem">
-          We are Realm — a dedicated utility billing service provider based in South East Queensland. Founded in 2023 by David Reid, we work to empower communities by specialising in water billing for residential buildings and strata communities.
+          We are Realm, a dedicated utility billing service provider based in South East Queensland. Founded in 2023 by David Reid, who brings over 15 years of industry experience, we specialise in water billing for residential buildings and strata communities.
         </p>
         <p class="t-body anim d3" style="max-width:480px">
-          Our all-encompassing approach ensures seamless utility management from start to finish. Our qualified technicians gather meter data, which undergoes rigorous quality assurance and validation — extending through to accurate invoicing, efficient payment collection, and comprehensive account reconciliation.
+          We manage the full billing cycle from start to finish. Our technicians read the meters, validate the data, and produce accurate invoices. We handle payment collection and account reconciliation.
         </p>
       </div>
       <div class="about-hero-img anim d2">
+        <img src="assets/buildings-scaled.jpg" alt="Residential buildings">
         <div class="about-hero-img-label">
-          <p>"Empowering<br>communities."</p>
+          <p>Better billing for<br>better communities.</p>
         </div>
       </div>
     </div>
@@ -206,7 +213,7 @@
       <div class="value-item">
         <div class="value-num">02</div>
         <h3>Accurate &amp; Timely Invoicing</h3>
-        <p>Committed to precision and punctuality — a smooth billing cycle and peace of mind for your residents.</p>
+        <p>Committed to precision and punctuality, ensuring a smooth billing cycle and peace of mind for your residents.</p>
       </div>
       <div class="value-item">
         <div class="value-num">03</div>
@@ -226,7 +233,7 @@
       <div class="value-item">
         <div class="value-num">06</div>
         <h3>Tailored Customer Service</h3>
-        <p>Personalised support that addresses your specific queries and concerns — promptly and effectively.</p>
+        <p>Personalised support that addresses your specific queries and concerns, promptly and effectively.</p>
       </div>
     </div>
   </div>
@@ -238,18 +245,15 @@
     <div class="section-tag" style="margin-bottom:3rem"><span class="t-label">Our Team</span></div>
     <div class="team-grid">
       <div class="team-photo">
-        <img src="https://i0.wp.com/url.xdx.mybluehost.me/wp-content/uploads/2024/03/ed0c7efb-405b-4a00-aa94-29efe114fdd4.png?resize=4000%2C2667&ssl=1" alt="David Reid" onerror="this.style.display='none'">
-        <div class="team-photo-fallback">
-          <span class="team-photo-initials">DR</span>
-        </div>
+        <img src="assets/david-reid.png" alt="David Reid">
       </div>
       <div>
         <p class="team-role">Director</p>
         <h2 class="team-name">David Reid</h2>
         <div class="team-bio">
-          <p>David commenced his career in the Australian Army, where he honed expertise in electronic systems and automation. In 2006, he began working with embedded utility networks, with a primary focus on improving metering, reporting and efficiency.</p>
-          <p>Throughout his professional journey, David has held diverse roles, all driven by his commitment to improving community resource consumption. His passion lies in orchestrating optimal outcomes — whether ensuring regulatory compliance, reducing costs, minimising waste, or enhancing efficiency.</p>
-          <p>David thrives on the challenges inherent in fostering positive change and leaving a lasting impact on the communities he serves.</p>
+          <p>David commenced his career in the Australian Army, where he honed expertise in electronic systems and automation. In 2006, he moved into embedded utility networks, working on metering, reporting, and efficiency.</p>
+          <p>Since then, he's worked across the industry with a consistent focus on helping communities manage their resource use. His focus is on getting things right, whether that's regulatory compliance, reducing costs, minimising waste, or improving efficiency.</p>
+          <p>David is driven by the practical challenge of helping communities use their resources better.</p>
         </div>
         <a href="https://www.linkedin.com/in/david-reid-398b017/" target="_blank" class="team-linkedin">
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
@@ -275,11 +279,16 @@
       <div class="footer-brand">
         <span class="footer-brand-name">Realm</span>
         <p>Utility billing for residential buildings and strata communities across South East Queensland.</p>
-        <div class="footer-social"><a href="#">in</a><a href="#">fb</a><a href="#">tw</a><a href="#">ig</a></div>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z"/></svg></a>
+          <a href="#" aria-label="X"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5"/></svg></a>
+        </div>
       </div>
       <div class="footer-col">
         <h5>Pages</h5>
-        <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="support.html">Support Hub</a></li></ul>
+        <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="support.html">Support</a></li></ul>
       </div>
       <div class="footer-col">
         <h5>Account</h5>
@@ -291,9 +300,12 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2024 Realm Corporation Pty Ltd. All rights reserved.</span>
+      <span class="footer-year"></span>
     </div>
   </div>
 </footer>
+<script>
+  document.querySelector('.footer-year').textContent = '\u00A9 ' + new Date().getFullYear() + ' Realm Corporation Pty Ltd. All rights reserved.';
+</script>
 </body>
 </html>

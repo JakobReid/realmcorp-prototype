@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Building Hub — Realm</title>
+  <title>Building Hub | Realm</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="stylesheet" href="style.css">
   <style>
     .hub-hero {
@@ -32,7 +33,7 @@
     }
     .hub-breadcrumb a { color: rgba(255,255,255,0.35); transition: color 0.2s; }
     .hub-breadcrumb a:hover { color: rgba(255,255,255,0.7); }
-    .hub-breadcrumb span { color: rgba(255,255,255,0.2); }
+    .hub-breadcrumb span { color: rgba(255,255,255,0.35); }
     .hub-building-header {
       display: flex;
       align-items: flex-end;
@@ -65,8 +66,8 @@
     }
     .hub-meta-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--amber); }
     .hub-portal-btn {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: var(--amber);
+      border: 1px solid var(--amber);
       color: white;
       padding: 0.65rem 1.3rem;
       border-radius: var(--r-sm);
@@ -80,7 +81,7 @@
       white-space: nowrap;
       text-decoration: none;
     }
-    .hub-portal-btn:hover { background: var(--amber); border-color: var(--amber); }
+    .hub-portal-btn:hover { background: var(--amber-light); border-color: var(--amber-light); }
 
     /* Cards grid */
     .hub-cards-section { padding: 4rem 0 5rem; }
@@ -90,17 +91,6 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
     }
-    /* Primary card — Move In — gets special treatment */
-    .hub-card.primary {
-      background: var(--navy);
-      border-color: var(--navy);
-      grid-column: span 1;
-    }
-    .hub-card.primary .hub-card-icon { background: rgba(255,255,255,0.07); }
-    .hub-card.primary .hub-card-icon svg { color: var(--amber); }
-    .hub-card.primary .hub-card-title { color: white; }
-    .hub-card.primary .hub-card-desc { color: rgba(255,255,255,0.45); }
-    .hub-card.primary:hover { background: var(--navy-mid); border-color: var(--amber); }
 
     .hub-info {
       margin-top: 3rem;
@@ -132,16 +122,13 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <div class="nav-logo-icon">
-        <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M7 1.5C7 1.5 10 4.5 10 7C10 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M7 1.5C7 1.5 4 4.5 4 7C4 9.5 7 12.5 7 12.5" stroke="#C07B2E" stroke-width="1.2"/><path d="M1.5 7H12.5" stroke="#C07B2E" stroke-width="1.2"/></svg>
-      </div>
-      <span class="nav-logo-name">Realm</span>
+      <img src="assets/realmcorp-logo-white.png" alt="Realm" style="width:110px;height:auto">
     </a>
     <ul class="nav-links">
-      <li><a href="about.html">About Us</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="support.html">Support</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="support.html">Support Hub</a></li>
-      <li><a href="index.html" class="nav-cta">Change Building</a></li>
     </ul>
   </div>
 </nav>
@@ -157,7 +144,7 @@
       <div>
         <h1 class="hub-building-name anim" id="buildingName">Your Building</h1>
         <div class="hub-building-meta">
-          <span class="hub-meta-tag"><span class="hub-meta-dot"></span> <span id="buildingPostcode">—</span></span>
+          <span class="hub-meta-tag"><span class="hub-meta-dot"></span> <span id="buildingPostcode">N/A</span></span>
           <span class="hub-meta-tag"><span class="hub-meta-dot"></span> Residential</span>
           <span class="hub-meta-tag"><span class="hub-meta-dot"></span> Water &amp; Utilities</span>
         </div>
@@ -179,7 +166,7 @@
 
     <div class="hub-cards-grid">
 
-      <a href="move-in.html" class="hub-card primary anim d1">
+      <a href="move-in.html" class="hub-card anim d1">
         <div class="hub-card-icon">
           <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><path d="M3 11L11 3l8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 9v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
@@ -242,12 +229,15 @@
         <span class="footer-brand-name">Realm</span>
         <p>Utility billing for residential buildings and strata communities across South East Queensland.</p>
         <div class="footer-social">
-          <a href="#">in</a><a href="#">fb</a><a href="#">tw</a><a href="#">ig</a>
+          <a href="#" aria-label="LinkedIn"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z"/></svg></a>
+          <a href="#" aria-label="X"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5"/></svg></a>
         </div>
       </div>
       <div class="footer-col">
         <h5>Pages</h5>
-        <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="support.html">Support Hub</a></li></ul>
+        <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="support.html">Support</a></li></ul>
       </div>
       <div class="footer-col">
         <h5>Account</h5>
@@ -259,7 +249,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2024 Realm Corporation Pty Ltd. All rights reserved.</span>
+      <span class="footer-year"></span>
     </div>
   </div>
 </footer>
@@ -275,7 +265,9 @@
   document.getElementById('buildingName').textContent = building;
   document.getElementById('breadBuilding').textContent = building;
   const pc = POSTCODES[building];
-  document.getElementById('buildingPostcode').textContent = pc ? 'Postcode ' + pc : '—';
+  document.getElementById('buildingPostcode').textContent = pc ? 'Postcode ' + pc : 'N/A';
+
+  document.querySelector('.footer-year').textContent = '\u00A9 ' + new Date().getFullYear() + ' Realm Corporation Pty Ltd. All rights reserved.';
 </script>
 </body>
 </html>
