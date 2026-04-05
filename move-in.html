@@ -44,6 +44,29 @@
       .movein-layout { grid-template-columns: 1fr; gap: 2.5rem; }
       .movein-sidebar { position: static; }
     }
+    @media (max-width: 640px) {
+      .movein-hero { padding: 2.5rem 0; }
+      .movein-steps { gap: 0.25rem; }
+      .movein-step { font-size: 0.72rem; }
+      .step-sep { width: 12px; }
+      .movein-layout { padding: 3rem 0 3.5rem; gap: 2.5rem; }
+      .movein-form-wrap { min-height: 400px; }
+      .movein-form-header { padding: 1.25rem 1.5rem; }
+      .movein-form-header p { font-size: 0.8rem; }
+      iframe#moveInFrame { min-height: 500px; }
+      .info-card { padding: 1.5rem; }
+      .info-card h4 { font-size: 1.05rem; }
+      .info-card p { font-size: 0.875rem; line-height: 1.7; }
+      .info-steps-list li { font-size: 0.875rem; }
+      .need-help { padding: 1.5rem; }
+      .need-help h4 { font-size: 1.05rem; }
+      .need-help p { font-size: 0.875rem; }
+    }
+    @media (max-width: 480px) {
+      .movein-steps { flex-wrap: wrap; gap: 0.5rem; }
+      .step-sep { display: none; }
+      .movein-step { font-size: 0.7rem; }
+    }
   </style>
 </head>
 <body>
@@ -60,8 +83,19 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="index.html" class="nav-cta">← Back to Search</a></li>
     </ul>
+    <button class="nav-hamburger" onclick="document.querySelector('.nav-mobile').classList.toggle('open')" aria-label="Menu">
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
   </div>
 </nav>
+<div class="nav-mobile">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="support.html">Support</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</div>
 
 <div class="movein-hero">
   <div class="wrap">
