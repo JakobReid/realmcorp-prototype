@@ -713,7 +713,8 @@
   const nav = document.querySelector('.nav');
   const hero = document.querySelector('.hero');
   window.addEventListener('scroll', function() {
-    if (window.scrollY > hero.offsetHeight - 66) {
+    var threshold = window.innerWidth <= 768 ? 20 : window.innerHeight / 4;
+    if (window.scrollY > threshold) {
       nav.classList.add('nav-solid');
     } else {
       nav.classList.remove('nav-solid');
