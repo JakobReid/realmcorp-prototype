@@ -108,9 +108,12 @@
       background: var(--cream);
       border: 1.5px solid var(--cream-dark);
       border-radius: var(--r-sm);
-      padding: 0.95rem 1.1rem;
-      font-size: 1.05rem;
+      padding: 1.1rem 1.1rem;
+      font-size: 1.4rem;
+      font-weight: 500;
       color: var(--text);
+      text-align: center;
+      letter-spacing: 0.2em;
       outline: none;
       transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     }
@@ -348,7 +351,7 @@
       .search-panel-top h2 { font-size: 1.5rem; }
       .search-panel-top p { font-size: 0.875rem; }
       .search-row { flex-direction: column; }
-      .search-row input { width: 100%; min-height: 48px; font-size: 1rem; }
+      .search-row input { width: 100%; min-height: 48px; font-size: 1.3rem; }
       .search-row button { width: 100%; justify-content: center; min-height: 48px; }
       .search-result-btn { width: 100%; justify-content: center; min-height: 44px; }
       .about-strip { padding: 2rem 0; }
@@ -414,7 +417,7 @@
       </div>
 
       <div class="search-row">
-        <input type="text" id="postcodeInput" placeholder="Enter postcode…" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+        <input type="text" id="postcodeInput" placeholder="0000" maxlength="4" inputmode="numeric" pattern="[0-9]*">
         <button onclick="doSearch()">Search →</button>
       </div>
 
