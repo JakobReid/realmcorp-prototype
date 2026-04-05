@@ -134,38 +134,74 @@
       letter-spacing: 0.04em;
     }
     .search-row button:hover { background: var(--amber); }
-    .search-result {
+    /* ─── SEARCH DIALOG ─── */
+    .search-overlay {
       display: none;
-      margin-top: 1rem;
-      background: var(--cream);
-      border-radius: var(--r-sm);
-      padding: 1rem 1.1rem;
-      border-left: 3px solid var(--amber);
-    }
-    .search-result.visible { display: block; }
-    .search-result-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
-    .search-result-building { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 500; color: var(--navy); margin-bottom: 0.6rem; }
-    .search-result-btn {
-      display: inline-flex;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(11,31,58,0.5);
+      backdrop-filter: blur(4px);
       align-items: center;
-      gap: 0.4rem;
-      background: var(--navy);
-      color: white;
-      border: none;
-      border-radius: var(--r-sm);
-      padding: 0.55rem 1rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-      letter-spacing: 0.04em;
+      justify-content: center;
+      padding: 1.5rem;
     }
-    .search-result-btn:hover { background: var(--amber); }
-    .search-no-result { display: none; margin-top: 1rem; font-size: 0.875rem; color: var(--text-muted); }
+    .search-overlay.visible { display: flex; }
+    .search-dialog {
+      background: white;
+      border-radius: var(--r-lg);
+      padding: 2.5rem;
+      max-width: 380px;
+      width: 100%;
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      text-align: center;
+      animation: fadeUp 0.3s ease;
+    }
+    .search-dialog-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .search-dialog-close:hover { color: var(--navy); }
+    .search-result { display: none; }
+    .search-result.visible { display: block; }
+    .search-result-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .search-result-sub { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem; }
+    .result-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+    .result-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      border-top: 1px solid var(--border);
+      padding: 1rem 0.25rem;
+      cursor: pointer;
+      transition: background 0.15s;
+      text-align: left;
+    }
+    .result-item:hover { background: var(--cream); }
+    .result-item-name { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 500; color: var(--navy); }
+    .result-item-arrow { font-size: 1rem; color: var(--amber); transition: transform 0.15s; }
+    .result-item:hover .result-item-arrow { transform: translateX(3px); }
+    .search-no-result { display: none; }
     .search-no-result.visible { display: block; }
-    .search-divider { display: flex; align-items: center; gap: 0.75rem; margin: 1.5rem 0 0; }
-    .search-divider::before, .search-divider::after { content: ''; flex: 1; height: 1px; background: var(--cream-dark); }
-    .search-divider span { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+    .search-noresult-text { font-size: 0.95rem; color: var(--text-mid); margin-bottom: 0.5rem; }
 
     /* ─── ABOUT STRIP ─── */
     .about-strip {
@@ -382,19 +418,26 @@
         <button onclick="doSearch()">Search →</button>
       </div>
 
-      <div class="search-result" id="searchResult">
-        <div class="search-result-label">Building found</div>
-        <div class="search-result-building" id="resultBuilding">Riverlily</div>
-        <button class="search-result-btn" id="resultBtn" onclick="goToHub()">Go to my building →</button>
-      </div>
-
-      <div class="search-no-result" id="searchNoResult">
-        No buildings found for that postcode. <a href="contact.html" style="color:var(--amber)">Contact us</a> for help.
-      </div>
-
     </div>
   </div>
 </section>
+
+<!-- SEARCH DIALOG -->
+<div class="search-overlay" id="searchOverlay" onclick="closeDialog(event)">
+  <div class="search-dialog">
+    <button class="search-dialog-close" onclick="closeResult()" aria-label="Close">&times;</button>
+    <div class="search-result" id="searchResult">
+      <div class="search-result-label" id="resultCount">1 building found</div>
+      <p class="search-result-sub">Select your building to view rates, pay a bill, or manage your account.</p>
+      <div class="result-list" id="resultList"></div>
+    </div>
+    <div class="search-no-result" id="searchNoResult">
+      <div class="search-result-label">No results</div>
+      <p class="search-noresult-text">No buildings found for that postcode.</p>
+      <a href="contact.html" class="btn btn-outline" style="width:100%;justify-content:center;margin-top:0.75rem">Contact us for help</a>
+    </div>
+  </div>
+</div>
 
 <!-- STATS STRIP -->
 <div class="about-strip">
@@ -606,42 +649,56 @@
 
 <script>
   // Simulate the postcode→building lookup (mirrors live site behaviour)
-  const BUILDINGS = {
-    '4211': 'Riverlily',
-    '4210': 'Crestwood Gardens',
-    '4212': 'Saltwater',
-    '4215': 'Chevron Vista',
-    '4216': 'Harbour Reach',
-    '4217': 'Surfers Palms',
+  var BUILDINGS = {
+    '4211': ['Riverlily', 'Coomera Outlook', 'Silverferns'],
+    '4210': ['Crestwood Gardens'],
+    '4212': ['Saltwater', 'Northern Bay'],
+    '4215': ['Chevron Vista', 'Surfers Views South'],
+    '4216': ['Harbour Reach'],
+    '4217': ['Surfers Palms', 'Cascades By The Bay', 'Iceworks', 'The Moroccan', 'Ivory Burleigh Beach', 'Signature Point CTS 41630', 'Surfers Views South CTS 24128', 'Beach House On Suttons CTS 34317', 'Forty Tuscany CTS 25724', 'City Connection', 'Portofino 1', 'Summer Chambers', 'Arvia CTS 51778', 'On The Bay Apartments CTS 36317', 'Shea Residences'],
   };
 
-  let currentBuilding = null;
+  var overlay = document.getElementById('searchOverlay');
+  var resultEl = document.getElementById('searchResult');
+  var noResultEl = document.getElementById('searchNoResult');
+  var listEl = document.getElementById('resultList');
 
   function doSearch() {
-    const val = document.getElementById('postcodeInput').value.trim();
-    const resultEl = document.getElementById('searchResult');
-    const noResultEl = document.getElementById('searchNoResult');
-    const buildingEl = document.getElementById('resultBuilding');
+    var val = document.getElementById('postcodeInput').value.trim();
 
     resultEl.classList.remove('visible');
     noResultEl.classList.remove('visible');
 
     if (!val || val.length < 4) return;
 
-    const building = BUILDINGS[val];
-    if (building) {
-      currentBuilding = building;
-      buildingEl.textContent = building;
+    var buildings = BUILDINGS[val];
+    if (buildings && buildings.length) {
+      listEl.innerHTML = buildings.map(function(name) {
+        return '<button class="result-item" onclick="goToHub(\'' + name.replace(/'/g, "\\'") + '\')">' +
+          '<span class="result-item-name">' + name + '</span>' +
+          '<span class="result-item-arrow">→</span>' +
+        '</button>';
+      }).join('');
+      document.getElementById('resultCount').textContent = buildings.length === 1
+        ? '1 building found'
+        : buildings.length + ' buildings found';
       resultEl.classList.add('visible');
     } else {
       noResultEl.classList.add('visible');
     }
+    overlay.classList.add('visible');
   }
 
-  function goToHub() {
-    if (currentBuilding) {
-      window.location.href = 'building-hub.html?building=' + encodeURIComponent(currentBuilding);
-    }
+  function closeResult() {
+    overlay.classList.remove('visible');
+  }
+
+  function closeDialog(e) {
+    if (e.target === overlay) closeResult();
+  }
+
+  function goToHub(name) {
+    window.location.href = 'building-hub.html?building=' + encodeURIComponent(name);
   }
 
   // Allow Enter key
