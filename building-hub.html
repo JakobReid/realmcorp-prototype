@@ -113,6 +113,39 @@
     .hub-info p { font-size: 0.875rem; color: var(--text-mid); line-height: 1.65; }
     .hub-info a { color: var(--amber); font-weight: 600; }
 
+    /* Rates section */
+    .hub-rates-section { background: white; padding: clamp(3rem, 6vw, 5rem) 0; }
+    .hub-rates-header { margin-bottom: 2.5rem; }
+    .hub-rates-header p { font-size: 0.925rem; color: var(--text-mid); line-height: 1.7; margin-top: 0.5rem; }
+    .rates-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+    .rates-group {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .rates-group-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .rates-group-header svg { color: var(--amber); flex-shrink: 0; }
+    .rates-group-header h3 {
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--navy);
+    }
+    .rates-table { width: 100%; border-collapse: collapse; }
+    .rates-table tr { border-bottom: 1px solid var(--border); }
+    .rates-table tr:last-child { border-bottom: none; }
+    .rates-table td { padding: 0.75rem 1.5rem; font-size: 0.875rem; color: var(--text-mid); }
+    .rates-table td:first-child { font-weight: 500; color: var(--navy); }
+    .rates-table td:last-child { text-align: right; font-weight: 600; white-space: nowrap; }
+    .rates-none { padding: 2rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
+
     @media (max-width: 900px) { .hub-cards-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 580px) { .hub-cards-grid { grid-template-columns: 1fr; } }
   </style>
@@ -202,6 +235,15 @@
         <div class="hub-card-link">Set up →</div>
       </a>
 
+      <a href="#rates" class="hub-card anim d4">
+        <div class="hub-card-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><rect x="2" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M6 10v4M10 9v5M14 12v2M18 8v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="hub-card-title">View Rates</div>
+        <div class="hub-card-desc">See the current utility rates for your building.</div>
+        <div class="hub-card-link">View rates →</div>
+      </a>
+
       <a href="support.html" class="hub-card anim d4">
         <div class="hub-card-icon">
           <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><path d="M4.5 9A6.5 6.5 0 0111 2.5h0A6.5 6.5 0 0117.5 9v.5a4.5 4.5 0 01-4.5 4.5h-1a1.5 1.5 0 010-3h1A1.5 1.5 0 0014.5 9.5V9a3.5 3.5 0 00-7 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M11 19.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="currentColor"/></svg>
@@ -218,6 +260,19 @@
         <svg width="18" height="18" fill="none" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" stroke="#C07B2E" stroke-width="1.4"/><path d="M9 8.5v4M9 6v.5" stroke="#C07B2E" stroke-width="1.5" stroke-linecap="round"/></svg>
       </div>
       <p>Need help completing the Move In form? Call our office on <a href="tel:1300584628">1300 584 628</a> during business hours. If your property doesn't currently have power, reconnection may take up to 3 business days.</p>
+    </div>
+  </div>
+</section>
+
+<section class="hub-rates-section" id="rates">
+  <div class="wrap">
+    <div class="hub-rates-header">
+      <div class="section-tag"><span class="t-label">Your Rates</span></div>
+      <h2 class="t-title">Utility Rates</h2>
+      <p>Current rates for your building. Rates are set by your local authority and passed on at cost.</p>
+    </div>
+    <div class="rates-groups" id="ratesContainer">
+      <div class="rates-none">No rate information available for this building.</div>
     </div>
   </div>
 </section>
@@ -267,8 +322,74 @@
   const pc = POSTCODES[building];
   document.getElementById('buildingPostcode').textContent = pc ? 'Postcode ' + pc : 'N/A';
 
+  // Rates data (from community_charges.csv)
+  var RATES = {
+    'Riverlily': [
+      { utility: 'Water', charge_name: 'Cold Water Tier One', charge_rate: '4.498', unit: '$/kL' },
+      { utility: 'Water', charge_name: 'Cold Water Tier Two', charge_rate: '5.555', unit: '$/kL' }
+    ],
+    'Crestwood Gardens': [
+      { utility: 'Electricity', charge_name: 'Electricity', charge_rate: '0.297', unit: '$/kWh' },
+      { utility: 'Electricity', charge_name: 'Service Fee', charge_rate: '0.396', unit: '$/account/day' }
+    ],
+    'Saltwater': [
+      { utility: 'Water', charge_name: 'Cold Water', charge_rate: '4.98', unit: '$/kL' },
+      { utility: 'Water', charge_name: 'Service Fee', charge_rate: '0.396', unit: '$/account/day' },
+      { utility: 'Water', charge_name: 'Hot Water Heating', charge_rate: '0.033', unit: '$/L' }
+    ],
+    'Chevron Vista': [
+      { utility: 'Electricity', charge_name: 'Electricity', charge_rate: '0.3204', unit: '$/kWh' },
+      { utility: 'Electricity', charge_name: 'Service Fee', charge_rate: '0.49', unit: '$/account/day' },
+      { utility: 'Water', charge_name: 'Cold Water', charge_rate: '4.98', unit: '$/kL' },
+      { utility: 'Water', charge_name: 'Service Fee', charge_rate: '0.36', unit: '$/account/day' }
+    ],
+    'Harbour Reach': [
+      { utility: 'Water', charge_name: 'Cold Water Tier One', charge_rate: '4.498', unit: '$/kL' },
+      { utility: 'Water', charge_name: 'Cold Water Tier Two', charge_rate: '5.555', unit: '$/kL' },
+      { utility: 'Water', charge_name: 'Hot Water Heating', charge_rate: '0.02343', unit: '$/L' },
+      { utility: 'Water', charge_name: 'Service Fee', charge_rate: '0.616', unit: '$/account/day' }
+    ],
+    'Surfers Palms': [
+      { utility: 'Electricity', charge_name: 'Electricity', charge_rate: '0.226', unit: '$/kWh' },
+      { utility: 'Electricity', charge_name: 'Service Fee', charge_rate: '0.95', unit: '$/account/day' }
+    ]
+  };
+
+  var icons = {
+    'Electricity': '<svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    'Water': '<svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    'Gas': '<svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 12c-2-2.67-4-5.33-4-8 4-1 8 1 8 4 0 2.67-2 4-4 4zm0 0c2 2.67 4 5.33 4 8-4 1-8-1-8-4 0-2.67 2-4 4-4z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    'Hot Water': '<svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+
+  function renderRates() {
+    var container = document.getElementById('ratesContainer');
+    var charges = RATES[building];
+    if (!charges || charges.length === 0) return;
+
+    // Group by utility
+    var groups = {};
+    charges.forEach(function(c) {
+      if (!groups[c.utility]) groups[c.utility] = [];
+      groups[c.utility].push(c);
+    });
+
+    var html = '';
+    for (var utility in groups) {
+      var icon = icons[utility] || icons['Water'];
+      html += '<div class="rates-group">';
+      html += '<div class="rates-group-header">' + icon + '<h3>' + utility + ' Rates</h3></div>';
+      html += '<table class="rates-table"><tbody>';
+      groups[utility].forEach(function(c) {
+        html += '<tr><td>' + c.charge_name + '</td><td>' + c.charge_rate + ' ' + c.unit + '</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+    container.innerHTML = html;
+  }
+  renderRates();
+
   document.querySelector('.footer-year').textContent = '\u00A9 ' + new Date().getFullYear() + ' Realm Corporation Pty Ltd. All rights reserved.';
 </script>
-<script src="theme-picker.js"></script>
 </body>
 </html>
